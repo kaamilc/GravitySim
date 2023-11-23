@@ -4,9 +4,14 @@
   "description": "",
   "main": "vector.js",
   "scripts": {
-  "test": "mocha"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "save-dev": "^0.0.1-security"
+  }
 }
