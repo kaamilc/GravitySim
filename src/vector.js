@@ -31,7 +31,7 @@ class Vector {
         this.update();
     }
 
-    divideVector(){
+    divideVector(scalar){
         this.x /= scalar;
         this.y /= scalar;
         this.update();
@@ -42,8 +42,16 @@ class Vector {
         this.magnitude = this.getMagnitude()
     }
 
-    getXY(){
-        this.x = this.magnitude * Math.cos(this.direction);
-        this.y = this.magnitude * Math.sin(this.direction);
+    static CreateFromMagDir(magnitude, direction){
+        var res = new Vector()
+        res.magnitude = magnitude;
+        res.direction = direction;
+        res.x = res.magnitude * Math.cos(res.direction);
+        res.y = res.magnitude * Math.sin(res.direction);
+        return res;
     }
 }
+
+module.exports = {
+    Vector:Vector
+    }
