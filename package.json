@@ -1,0 +1,12 @@
+{
+  "name": "wektor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vector.js",
+  "scripts": {
+  "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
