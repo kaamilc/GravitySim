@@ -1,9 +1,10 @@
 const Vector = require('../src/vector').Vector;
+const GravityfallProg = require('../src/vector').GravityfallProg;
 const expect = require('chai').expect;
 
 const epsilon = 0.0001;
 describe('Describe Vector', function(){
-    it('1. Magnitude', function(done){
+    it('1. Magnitude', function(done){  
         let v1 = new Vector(3, 4);
         expect(v1.getMagnitude()).to.equal(5);
         done()
@@ -51,6 +52,21 @@ describe('Describe Vector', function(){
         let v6 = Vector.CreateFromMagDir(Math.sqrt(2) * 10, 45 / 180 * Math.PI);
         expect(Math.abs(v6.x - 10) < epsilon).is.equal(true);
         expect(Math.abs(v6.y - 10) < epsilon).is.equal(true);
+        done()
+    })
+
+    it('8. test', function(done){
+        let prog = new GravityfallProg()
+        prog.run()
+        // expect(Math.abs(v2.getDirection() - 45/180.0 * Math.PI) < epsilon).is.equal(true);
+        done()
+    })
+
+    it('9. Add2', function(done){
+        let v5 = new Vector(12, 16);
+        let added = new Vector(3, 4)
+        res = Vector.add(v5, added)
+        expect(res.getMagnitude()).to.equal(25);
         done()
     })
 
