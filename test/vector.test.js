@@ -69,5 +69,4 @@ describe('Describe Vector', function(){
         expect(res.getMagnitude()).to.equal(25);
         done()
     })
-
 });
