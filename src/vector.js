@@ -1,4 +1,3 @@
-const { version } = require("chai");
 
 class Vector {
     constructor(x, y){
@@ -74,7 +73,7 @@ class GravityfallProg{
 
     run() {
         // const random = Math.random()
-        const points = [
+        var points = [
             {
                 Mass: 1.1,
                 Position: new Vector(0, 0, 0),
@@ -100,15 +99,17 @@ class GravityfallProg{
         // });
         let dt = 0.05;
         let t = 0;
-        while(t < 1450){
-            points - this.Rk4Step(points, dt);
-            for (let i = 0; i < points.length; i++) {
-                const el = points[i];
+        while(t < 10){
+            points = this.Rk4Step(points, dt);
+            // for (let i = 0; i < points.length; i++) {
+            //     const el = points[i];
                 // const file = files[i].file;
                 // const toPrint = withTime ? t.concat(el.Position.toArray()) : el.Position.toArray();
                 // file.writeLine(toPrint.map(it => it.toString()).join(";"));
-                console.log(points)
-            }
+                // console.log(points.map(el => el.Position))
+            // }
+            // console.log(points[1].Position.x + ";" + points[1].Position.y)
+            
             t += dt;
         }
         // files.forEach(el => {
@@ -125,22 +126,38 @@ class GravityfallProg{
         const sys4 = this.step(points, sys3, k1, h);
         const k4 = this.f(sys4);
         const dv = [
-            k1,
-            this.mul(2, k2),
-            this.mul(2, k3),
-            k4
-        ].reduce((ki, kii) => Vector.add(ki, kii)).map(el => Vector.multiply(el, h / 6));
-        const dr = [
-            points.map(el => el.Velocity),
-            sys2.map(el => this.mul(2, el.Velocity)),
-            sys3.map(el => this.mul(2, el.Velocity)),
-            sys4.map(el => el.Velocity)
-        ].reduce((ki, kii) => ki.map((e1, i) => e1 + kii[i]));
-        return this.step(points, dv.map(el => el * h / 6), dr.map(el => el * h / 6));
+                k1,
+                this.multb(2, k2),
+                this.multb(2, k3),
+                k4
+            ]
+            .reduce((ki, kii) => this.addtb(ki, kii))
+            .map(el => Vector.multiply(el, h / 6));
+
+        const dr0 = [
+                points.map(el => el.Velocity),
+                sys2.map(el => Vector.multiply(el.Velocity, 2)),
+                sys3.map(el => Vector.multiply(el.Velocity, 2)),
+                sys4.map(el => el.Velocity)
+            ]
+        var dr = dr0
+            .reduce((ki, kii) => this.addtb(ki, kii))
+            .map(el => Vector.multiply(el, h / 6));
+            
+        return this.step_in(points, dv, dr);
     }
 
-    mul(d, inp) {
+    multb(d, inp) {
         return inp.map(el => Vector.multiply(el, d));
+    }
+
+    addtb(tbv1, tbv2) {
+        // return inp.map(el => Vector.add(el, d));
+        let zipped = []
+        for(let i = 0; i < tbv1.length; i++){
+              zipped.push(Vector.add(tbv1[i], tbv2[i]))
+        }
+        return zipped;    
     }
 
     f(system) {
@@ -148,13 +165,38 @@ class GravityfallProg{
     }
 
     step(toMove, state, acc, h) {
-        return toMove.map((el, i) => {
-            return{
-                Mass: el.Mass,
-                Velocity: el.Velocity + acc[i],
-                Position: el.Position + state[i] * h
-            };
-        });
+        // return toMove.map((el, i) => {
+        //     return{
+        //         Mass: el.Mass,
+        //         Velocity: el.Velocity + acc[i],
+        //         Position: el.Position + state[i] * h
+        //     };
+        // });
+        return this.step_in(toMove, this.multb(h, acc), this.multb(h, state.map(el=>el.Velocity)) )
+    }
+
+    step_in(system, dv, dr) {
+
+        let result = []
+        for (let i = 0; i < system.length; i++) {
+            var el = system[i]
+            result.push(
+                {
+                    Mass: el.Mass,
+                    Velocity: Vector.add(el.Velocity, dv[i]),
+                    Position: Vector.add(el.Position, dr[i])
+                }
+            )
+        }
+
+        return result;
+        // return toMove.map((el, i) => {
+        //     return{
+        //         Mass: el.Mass,
+        //         Velocity: el.Velocity + acc[i],
+        //         Position: el.Position + state[i] * h
+        //     };
+        // });
     }
 
     eulerStep(points, dt) {
@@ -165,7 +207,7 @@ class GravityfallProg{
         if(toMove.length !== system.length){
             throw new Error(`EulerStep toMove.Length != system.length ${toMove.length} ${system.length}`)
         }
-        const hf = this.mul(dt, this.f(system));
+        const hf = this.multb(dt, this.f(system));
         return this.step(toMove, hf, system.map((sys, i) => dt * (sys.Velocity + hf[i])));
     }
 
@@ -190,6 +232,8 @@ class Particle {
     }
 }
 
+var newprog = new GravityfallProg();
+newprog.run()
 
 module.exports = {
     Vector:Vector,
