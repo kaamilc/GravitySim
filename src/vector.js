@@ -1,3 +1,6 @@
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext('2d');
+
 
 class Vector {
     constructor(x, y){
@@ -69,11 +72,21 @@ class Vector {
 class GravityfallProg{
     constructor(){
         this.GConst = 1e+0;
-    }
-
-    run() {
-        // const random = Math.random()
-        var points = [
+        this.bgimg = new Image();
+        this.imgLoaded = false
+        this.bgimg.src = "images/bg.png"
+        this.bgimg.onload = () => this.imgLoaded = true
+        this.time = 0
+        this.sun = new Image();
+        this.sun.src = "images/sun.png"
+        this.sun.onload = () => this.imgLoaded = true
+        this.earth = new Image();
+        this.earth.src = "images/earth.png"
+        this.earth.onload = () => this.imgLoaded = true
+        this.moon = new Image();
+        this.moon.src = "images/moon.png"
+        this.moon.onload = () => this.imgLoaded = true
+        this.points = [
             {
                 Mass: 1.1,
                 Position: new Vector(0, 0, 0),
@@ -90,32 +103,36 @@ class GravityfallProg{
                 Velocity: new Vector(0, 0.285, -0.05)
             }
         ];
-        const withTime = false;
-        // const files = points.map((points, idx) => {
-        //     const name = `res${idx}.csv`;
-        //     const file = new File(name);
-        //     file.writeLine(withTime ? "t; x; y; z" : "x; y; z");
-        //     return { file, name };
-        // });
-        let dt = 0.05;
-        let t = 0;
-        while(t < 10){
-            points = this.Rk4Step(points, dt);
-            // for (let i = 0; i < points.length; i++) {
-            //     const el = points[i];
-                // const file = files[i].file;
-                // const toPrint = withTime ? t.concat(el.Position.toArray()) : el.Position.toArray();
-                // file.writeLine(toPrint.map(it => it.toString()).join(";"));
-                // console.log(points.map(el => el.Position))
-            // }
-            // console.log(points[1].Position.x + ";" + points[1].Position.y)
-            
-            t += dt;
-        }
-        // files.forEach(el => {
-        //     el.file.dispose();
-        // });
+        this.withTime = false;
+        this.dt = 0.05;
+        this.t = 0;
     }
+
+    iter() {
+       // while(t < 10){
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            this.points = this.Rk4Step(this.points, this.dt);
+            ctx.beginPath()
+            ctx.arc(this.xtoscreen(this.points[0].Position.x), this.ytoscreen(this.points[0].Position.y), 50, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgb(223, 50, 2)"
+            ctx.fill()
+            ctx.beginPath()
+            ctx.arc(this.xtoscreen(this.points[1].Position.x), this.ytoscreen(this.points[1].Position.y), 5, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgb(36, 171, 186)"
+            ctx.fill()
+            ctx.beginPath()
+            ctx.arc(this.xtoscreen(this.points[2].Position.x), this.ytoscreen(this.points[2].Position.y), 5, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgb(67, 67, 67)"
+            ctx.fill()
+
+
+            console.log(this.points[0].Position.x + ";" + this.points[0].Position.y)
+            console.log(this.points[1].Position.x + ";" + this.points[1].Position.y)           
+            console.log(this.points[2].Position.x + ";" + this.points[2].Position.y)
+            this.t += this.dt;
+    }
+
 
     Rk4Step(points, h){
         const k1 = this.f(points);
@@ -222,6 +239,13 @@ class GravityfallProg{
         }).reduce((v1, v2) => Vector.add(v1, v2))
         return Vector.multiply(force, 1.0 / me.Mass);
     }
+    xtoscreen(l) {
+        return Math.round(l * 20 + canvas.width / 2)
+    }
+    
+    ytoscreen(l) {
+        return Math.round(l * 20 + canvas.height / 2)
+    }
 }
 
 class Particle {
@@ -233,9 +257,21 @@ class Particle {
 }
 
 var newprog = new GravityfallProg();
-newprog.run()
+//newprog.run()
 
-module.exports = {
-    Vector:Vector,
-    GravityfallProg: GravityfallProg
-    }
+window.onload = function () {
+    // document.addEventListener("keydown", keyDown);
+    // document.addEventListener("keyup", keyUp);
+    // //setInterval(update, 10);
+    window.requestAnimationFrame(update)
+}
+
+function update() {
+    newprog.iter()
+    window.requestAnimationFrame(update)
+}
+
+// module.exports = {
+//     Vector:Vector,
+//     GravityfallProg: GravityfallProg
+//     }

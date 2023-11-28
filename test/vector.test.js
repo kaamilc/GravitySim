@@ -57,7 +57,7 @@ describe('Describe Vector', function(){
 
     it('8. test', function(done){
         let prog = new GravityfallProg()
-        prog.run()
+        prog.iter()
         // expect(Math.abs(v2.getDirection() - 45/180.0 * Math.PI) < epsilon).is.equal(true);
         done()
     })
