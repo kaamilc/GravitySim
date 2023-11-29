@@ -1,6 +1,8 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext('2d');
-
+const StepsPerFarme = 100
+const ToScreenMul = 10
+const TimeStep = 0.01
 
 class Vector {
     constructor(x, y){
@@ -88,48 +90,65 @@ class GravityfallProg{
         this.moon.onload = () => this.imgLoaded = true
         this.points = [
             {
-                Mass: 1.1,
-                Position: new Vector(0, 0, 0),
-                Velocity: new Vector(0, -0.01, 0)
+                Mass: 1.5,
+                Position: new Vector(0, 0),
+                Velocity: new Vector(0, -0.01),
+                Color: "rgb(223, 50, 2)",
+                Radius: 20
             },
             {
-                Mass: 4e-2,
-                Position: new Vector(-10, -3, 1),
-                Velocity: new Vector(0, 0.3, 0.05)
+                Mass: 5e-2,
+                Position: new Vector(-20, 0),
+                Velocity: new Vector(0, 0.3),
+                Color: "rgb(36, 171, 186)",
+                Radius: 5
             },
             {
                 Mass: 3e-9,
-                Position: new Vector(-10.5, -3.3, 1.1),
-                Velocity: new Vector(0, 0.285, -0.05)
-            }
+                Position: new Vector(-22, 2),
+                Velocity: new Vector(0.04, 0.35),
+                Color: "rgb(67, 67, 67)",
+                Radius: 5
+            },
+            {
+                Mass: 1e-9,
+                Position: new Vector(-10, 0),
+                Velocity: new Vector(0, 0.4),
+                Color: "rgb(53, 0, 0)",
+                Radius: 5
+            },
         ];
         this.withTime = false;
-        this.dt = 0.05;
+        this.dt = TimeStep;
         this.t = 0;
     }
 
     iter() {
        // while(t < 10){
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "black";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            this.points = this.Rk4Step(this.points, this.dt);
-            ctx.beginPath()
-            ctx.arc(this.xtoscreen(this.points[0].Position.x), this.ytoscreen(this.points[0].Position.y), 50, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgb(223, 50, 2)"
-            ctx.fill()
-            ctx.beginPath()
-            ctx.arc(this.xtoscreen(this.points[1].Position.x), this.ytoscreen(this.points[1].Position.y), 5, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgb(36, 171, 186)"
-            ctx.fill()
-            ctx.beginPath()
-            ctx.arc(this.xtoscreen(this.points[2].Position.x), this.ytoscreen(this.points[2].Position.y), 5, 0, 2 * Math.PI);
-            ctx.fillStyle = "rgb(67, 67, 67)"
-            ctx.fill()
-
-
-            console.log(this.points[0].Position.x + ";" + this.points[0].Position.y)
-            console.log(this.points[1].Position.x + ";" + this.points[1].Position.y)           
-            console.log(this.points[2].Position.x + ";" + this.points[2].Position.y)
+            for(var i = 0; i < StepsPerFarme; i++){
+                this.points = this.Rk4Step(this.points, this.dt);
+            }
+            
+            // ctx.beginPath()
+            // ctx.arc(this.xtoscreen(this.points[0].Position.x), this.ytoscreen(this.points[0].Position.y), 50, 0, 2 * Math.PI);
+            // ctx.fillStyle = "rgb(223, 50, 2)"
+            // ctx.fill()
+            // ctx.beginPath()
+            // ctx.arc(this.xtoscreen(this.points[1].Position.x), this.ytoscreen(this.points[1].Position.y), 5, 0, 2 * Math.PI);
+            // ctx.fillStyle = "rgb(36, 171, 186)"
+            // ctx.fill()
+            // ctx.beginPath()
+            // ctx.arc(this.xtoscreen(this.points[2].Position.x), this.ytoscreen(this.points[2].Position.y), 5, 0, 2 * Math.PI);
+            // ctx.fillStyle = "rgb(67, 67, 67)"
+            // ctx.fill()
+            this.points.forEach(point => this.drawPoint(point));
+            if (false){
+                console.log(this.points[0].Position.x + ";" + this.points[0].Position.y)
+                console.log(this.points[1].Position.x + ";" + this.points[1].Position.y)           
+                console.log(this.points[2].Position.x + ";" + this.points[2].Position.y)
+            }
             this.t += this.dt;
     }
 
@@ -201,7 +220,9 @@ class GravityfallProg{
                 {
                     Mass: el.Mass,
                     Velocity: Vector.add(el.Velocity, dv[i]),
-                    Position: Vector.add(el.Position, dr[i])
+                    Position: Vector.add(el.Position, dr[i]),
+                    Color: el.Color,
+                    Radius: el.Radius
                 }
             )
         }
@@ -240,19 +261,31 @@ class GravityfallProg{
         return Vector.multiply(force, 1.0 / me.Mass);
     }
     xtoscreen(l) {
-        return Math.round(l * 20 + canvas.width / 2)
+        return Math.round(l * ToScreenMul + canvas.width / 2)
     }
     
     ytoscreen(l) {
-        return Math.round(l * 20 + canvas.height / 2)
+        return Math.round(l * ToScreenMul + canvas.height / 2)
+    }
+
+    drawPoint(point){
+        ctx.beginPath()
+        ctx.arc(this.xtoscreen(point.Position.x), this.ytoscreen(point.Position.y), point.Radius, 0, 2 * Math.PI);
+        ctx.fillStyle = point.Color;
+        ctx.fill()
+    }
+    print(){
+        this.points.forEach(point => console.log(point));
     }
 }
 
 class Particle {
-    constructor(mass, position, velocity){
+    constructor(mass, position, velocity, color, radius){
         this.Mass = mass;
         this.Position = position;
         this.Velocity = velocity;
+        this.Color = color;
+        this.Radius = radius;
     }
 }
 
@@ -269,6 +302,10 @@ window.onload = function () {
 function update() {
     newprog.iter()
     window.requestAnimationFrame(update)
+}
+
+function button(){
+    newprog.print()
 }
 
 // module.exports = {
