@@ -1,5 +1,6 @@
 const Vector = require('../src/vector').Vector;
-const GravityfallProg = require('../src/vector').GravityfallProg;
+// import { Vector } from '../src/vector';
+// const GravityfallProg = require('../src/vector').GravityfallProg;
 const expect = require('chai').expect;
 
 const epsilon = 0.0001;

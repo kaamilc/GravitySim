@@ -1,4 +1,3 @@
-
 class Vector {
     constructor(x, y) {
         this.x = x || 0;
@@ -65,7 +64,10 @@ class Vector {
     }
 }
 
-// module.exports = {
-//     Vector:Vector,
-//     GravityfallProg: GravityfallProg
-//     }
+if(typeof module != `undefined`){
+    module.exports = {
+        Vector:Vector,
+    }
+}
+
+

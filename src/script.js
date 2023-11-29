@@ -22,6 +22,7 @@ class GravityfallProg {
         this.moon = new Image();
         this.moon.src = "images/moon.png"
         this.moon.onload = () => this.imgLoaded = true
+        this.run = false
         var tmppoints = [
             {
                 Mass: 1.5,
@@ -59,7 +60,7 @@ class GravityfallProg {
     }
 
     iter() {
-
+        
         ctx.fillStyle = "black";
         if (ifcheck() != true) {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
