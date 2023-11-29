@@ -1,7 +1,7 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext('2d');
 const StepsPerFarme = 100
-const ToScreenMul = 10
+const ToScreenMul = 8
 const TimeStep = 0.01
 
 class Vector {
@@ -98,24 +98,24 @@ class GravityfallProg{
             },
             {
                 Mass: 5e-2,
-                Position: new Vector(-20, 0),
+                Position: new Vector(-21, 0),
                 Velocity: new Vector(0, 0.3),
                 Color: "rgb(36, 171, 255)",
-                Radius: 10
+                Radius: 7
             },
             {
-                Mass: 3e-9,
-                Position: new Vector(-22, 2),
-                Velocity: new Vector(0.04, 0.35),
+                Mass: 2e-9,
+                Position: new Vector(-21, -3),
+                Velocity: new Vector(0.10, 0.30),
                 Color: "rgb(240, 240, 240)",
-                Radius: 5
+                Radius: 3
             },
             {
-                Mass: 1e-9,
-                Position: new Vector(-10, 0),
-                Velocity: new Vector(0, 0.4),
+                Mass: 7e-9,
+                Position: new Vector(10, 0),
+                Velocity: new Vector(0, -0.4),
                 Color: "rgb(0, 170, 53)",
-                Radius: 5
+                Radius: 6
             },
         ];
         this.points = tmppoints.map(point => new Particle(point.Mass, point.Position, point.Velocity, point.Color, point.Radius))
