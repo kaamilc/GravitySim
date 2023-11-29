@@ -88,7 +88,7 @@ class GravityfallProg{
         this.moon = new Image();
         this.moon.src = "images/moon.png"
         this.moon.onload = () => this.imgLoaded = true
-        this.points = [
+        var tmppoints = [
             {
                 Mass: 1.5,
                 Position: new Vector(0, 0),
@@ -118,6 +118,7 @@ class GravityfallProg{
                 Radius: 5
             },
         ];
+        this.points = tmppoints.map(point => new Particle(point.Mass, point.Position, point.Velocity, point.Color, point.Radius))
         this.withTime = false;
         this.dt = TimeStep;
         this.t = 0;
@@ -218,15 +219,7 @@ class GravityfallProg{
         let result = []
         for (let i = 0; i < system.length; i++) {
             var el = system[i]
-            result.push(
-                {
-                    Mass: el.Mass,
-                    Velocity: Vector.add(el.Velocity, dv[i]),
-                    Position: Vector.add(el.Position, dr[i]),
-                    Color: el.Color,
-                    Radius: el.Radius
-                }
-            )
+            result.push(new Particle(el.Mass, Vector.add(el.Position, dr[i]), Vector.add(el.Velocity, dv[i]), el.Color, el.Radius))
         }
 
         return result;
