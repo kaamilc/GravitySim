@@ -55,14 +55,7 @@ describe('Describe Vector', function(){
         done()
     })
 
-    it('8. test', function(done){
-        let prog = new GravityfallProg()
-        prog.iter()
-        // expect(Math.abs(v2.getDirection() - 45/180.0 * Math.PI) < epsilon).is.equal(true);
-        done()
-    })
-
-    it('9. Add2', function(done){
+    it('8. Add2', function(done){
         let v5 = new Vector(12, 16);
         let added = new Vector(3, 4)
         res = Vector.add(v5, added)
