@@ -94,27 +94,27 @@ class GravityfallProg{
                 Position: new Vector(0, 0),
                 Velocity: new Vector(0, -0.01),
                 Color: "rgb(223, 50, 2)",
-                Radius: 20
+                Radius: 30
             },
             {
                 Mass: 5e-2,
                 Position: new Vector(-20, 0),
                 Velocity: new Vector(0, 0.3),
-                Color: "rgb(36, 171, 186)",
-                Radius: 5
+                Color: "rgb(36, 171, 255)",
+                Radius: 10
             },
             {
                 Mass: 3e-9,
                 Position: new Vector(-22, 2),
                 Velocity: new Vector(0.04, 0.35),
-                Color: "rgb(67, 67, 67)",
+                Color: "rgb(240, 240, 240)",
                 Radius: 5
             },
             {
                 Mass: 1e-9,
                 Position: new Vector(-10, 0),
                 Velocity: new Vector(0, 0.4),
-                Color: "rgb(53, 0, 0)",
+                Color: "rgb(0, 170, 53)",
                 Radius: 5
             },
         ];
@@ -126,7 +126,9 @@ class GravityfallProg{
     iter() {
        // while(t < 10){
             ctx.fillStyle = "black";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            if(ifcheck() != true){
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
             for(var i = 0; i < StepsPerFarme; i++){
                 this.points = this.Rk4Step(this.points, this.dt);
             }
@@ -306,6 +308,13 @@ function update() {
 
 function button(){
     newprog.print()
+}
+
+function ifcheck(){
+    var cb = document.getElementById("check")
+    if(cb.checked){
+        return true
+    }
 }
 
 // module.exports = {
