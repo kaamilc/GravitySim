@@ -7,14 +7,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="myCanvas" width="700" height="700" style="border:3px solid rgb(0, 0, 0)">
+    <div class="canv">
+        <canvas id="myCanvas" width="700" height="500" style="border:3px solid rgb(0, 0, 0)">
 
-    </canvas>
+        </canvas>
+    </div>
     <script src="vector.js"></script>
     <script src="script.js"></script>
-    <button onclick="button()"> click </button>
+    <div class="main">
+        <button onclick="button()"> Pobierz dane </button>
+        <br><br>
+        Trajektoria:    <input type="checkbox" id="check" onclick="ifcheck()">
+        <br><br>
+        Obrazki:        <input type="checkbox" id="images" onclick="images()">
+    </div>
 
-    Trajektoria:    <input type="checkbox" id="check" onclick="ifcheck()">
-    Obrazki:        <input type="checkbox" id="images" onclick="images()">
+    <div class="gravity">
+        <h1>Gravity Simulation</h1>
+    </div>
 </body>
 </html>

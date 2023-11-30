@@ -1,10 +1,9 @@
-/* html{
-    background-image: url(images/bg.png);
-    background-color: black;
-    background-size: 100%;
+html{
+    background-color: rgb(171, 171, 171);
     padding: 0px;
     margin: 0px;
 }
+/* 
 .sun{
     height: 225px;
     width: 225px;
@@ -26,3 +25,54 @@
     background-size: 100%;
     background-color: rgba(63, 63, 63, 0);
 } */
+.canv{
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    width: 700px;
+    height: 500px;
+    border-right: 10px;
+    border-width: 10px;
+    border-bottom-width: 13px;
+    border-right-width: 13px;
+    border-style: solid;
+    border-color: rgb(58, 58, 58);
+}
+
+.main{
+    text-align: center;
+    font-family: Arial;
+    font-size: large;
+    margin: 10px;
+    margin-left: 50px;
+    padding: 10px;
+    float: left;
+    width: 40%;
+    height: 40%;
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgb(58, 58, 58);
+    background-color: rgb(198, 198, 198);
+}
+
+button{
+    border: 0px;
+    width: 100px;
+    height: 40px;
+    font-size: 12pt;
+    background-color: whitesmoke;
+}
+button:hover{
+    background-color: rgb(143, 143, 143);
+    transition: 2000ms;
+}
+
+.gravity{
+    float: left;
+    margin: 40px;
+    margin-left: 85px;
+    padding: 10px;
+    font-size: xx-large;
+    text-align: center;
+    font-family: Arial;
+}

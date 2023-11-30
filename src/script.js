@@ -64,7 +64,7 @@ class GravityfallProg {
         ctx.fillStyle = "black";
         if (ifcheck() != true) {
             if(images() == true){
-                ctx.drawImage(this.bgimg, 0, 0)
+                ctx.drawImage(this.bgimg, -1, -1)
             }else{
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }     
@@ -73,7 +73,7 @@ class GravityfallProg {
         for (var i = 0; i < StepsPerFarme; i++) {
             this.points = this.Rk4Step(this.points, this.dt);
         }
-        
+
         this.points.forEach(point => this.drawPoint(point));  
         if(images() == true){
             ctx.drawImage(this.sun, this.xtoscreen(this.points[0].Position.x) - 75, this.ytoscreen(this.points[0].Position.y) - 75)
