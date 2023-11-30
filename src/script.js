@@ -63,7 +63,7 @@ class GravityfallProg {
         
         ctx.fillStyle = "black";
         if (ifcheck() != true) {
-            if(images() == true){
+            if(imgfun() == true){
                 ctx.drawImage(this.bgimg, -1, -1)
             }else{
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -75,7 +75,7 @@ class GravityfallProg {
         }
 
         this.points.forEach(point => this.drawPoint(point));  
-        if(images() == true){
+        if(imgfun() == true){
             ctx.drawImage(this.sun, this.xtoscreen(this.points[0].Position.x) - 75, this.ytoscreen(this.points[0].Position.y) - 75)
             ctx.drawImage(this.earth, this.xtoscreen(this.points[1].Position.x) - 15, this.ytoscreen(this.points[1].Position.y) - 15)
             ctx.drawImage(this.moon, this.xtoscreen(this.points[2].Position.x) - 5, this.ytoscreen(this.points[2].Position.y) - 5)
@@ -204,6 +204,19 @@ class GravityfallProg {
     print() {
         this.points.forEach(point => console.log(point));
     }
+    
+    // newpl() {
+    //     var neewpl = [
+    //         {
+    //             Mass: Math.random(0, 3),
+    //             Position: new Vector (Math.random(-15, 15), Math.random(-15, 15)),
+    //             Velocity: new Vector (Math.random(-0.1, 0.1), Math.random(-0.1, 0.1)),
+    //             Color: "black",
+    //             Radius: Math.random(0, 20)
+    //         }
+    //     ]
+    //     this.points.push(neewpl)
+    // }
 }
 
 class Particle {
@@ -241,9 +254,13 @@ function ifcheck() {
     }
 }
 
-function images(){
-    var im = document.getElementById("images")
-    if(im.checked){
+function imgfun() {
+    var im = document.getElementById("img")
+    if (im.checked) {
         return true
     }
 }
+
+// function newplanet() {
+//     prog.newpl()
+// }
