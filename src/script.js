@@ -63,13 +63,24 @@ class GravityfallProg {
         
         ctx.fillStyle = "black";
         if (ifcheck() != true) {
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            if(images() == true){
+                ctx.drawImage(this.bgimg, 0, 0)
+            }else{
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }     
         }
+
         for (var i = 0; i < StepsPerFarme; i++) {
             this.points = this.Rk4Step(this.points, this.dt);
         }
-
-        this.points.forEach(point => this.drawPoint(point));
+        
+        this.points.forEach(point => this.drawPoint(point));  
+        if(images() == true){
+            ctx.drawImage(this.sun, this.xtoscreen(this.points[0].Position.x) - 75, this.ytoscreen(this.points[0].Position.y) - 75)
+            ctx.drawImage(this.earth, this.xtoscreen(this.points[1].Position.x) - 15, this.ytoscreen(this.points[1].Position.y) - 15)
+            ctx.drawImage(this.moon, this.xtoscreen(this.points[2].Position.x) - 5, this.ytoscreen(this.points[2].Position.y) - 5)
+        }
+                 
 
         if (false) {
             console.log(this.points[0].Position.x + ";" + this.points[0].Position.y)
@@ -226,6 +237,13 @@ function button() {
 function ifcheck() {
     var cb = document.getElementById("check")
     if (cb.checked) {
+        return true
+    }
+}
+
+function images(){
+    var im = document.getElementById("images")
+    if(im.checked){
         return true
     }
 }
