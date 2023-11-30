@@ -9,3 +9,5 @@
 ![alt text](./images/presentation1.png)
 
 **Trajectory** - you can see how planets are moving
+
+![alt text](./images/presentation2.png)
