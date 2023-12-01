@@ -2,6 +2,8 @@
 
 **Gravity Simulator** is a website where you can watch the impact of mass, velocity and position on the behavior of planets
 
+**[Try here](https://kaamilc.github.io/GravitySim/index.html)**
+
 ![alt text](./src/images/presentation.png)
 
 **Images** are showing planets
