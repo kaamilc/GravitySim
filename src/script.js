@@ -212,12 +212,13 @@ class GravityfallProg {
         var newvelx = Number(prompt("Podaj wektor x"))
         var newvely = Number(prompt("Podaj wektor y"))
         var newradius = Number(prompt("Podaj promień"))
+        var colloor = "blueviolet"
         var neewpl = [
             {
                 Mass: newmass,
                 Position: new Vector (newx, newy),
                 Velocity: new Vector (newvelx, newvely),
-                Color: "darkblue",
+                Color: colloor,
                 Radius: newradius
             }
         ]
@@ -225,12 +226,12 @@ class GravityfallProg {
         this.points.push(newpart)
     }
     newc() {
-        var newmass = 1.5
+        var newmass = Math.random(0.1, 0.6)
         var newx = -30
         var newy = -30
-        var newvelx = 0.25
-        var newvely = 0.25
-        var newradius = 10
+        var newvelx = Math.random(0.1, 3)
+        var newvely = Math.random(0.1, 3)
+        var newradius = 5 + newmass * 20    
         var neewpl = [
             {
                 Mass: newmass,
