@@ -217,7 +217,26 @@ class GravityfallProg {
                 Mass: newmass,
                 Position: new Vector (newx, newy),
                 Velocity: new Vector (newvelx, newvely),
-                Color: "white",
+                Color: "darkblue",
+                Radius: newradius
+            }
+        ]
+        var newpart = new Particle(neewpl[0].Mass, neewpl[0].Position, neewpl[0].Velocity, neewpl[0].Color, neewpl[0].Radius)
+        this.points.push(newpart)
+    }
+    newc() {
+        var newmass = 1.5
+        var newx = -30
+        var newy = -30
+        var newvelx = 0.25
+        var newvely = 0.25
+        var newradius = 10
+        var neewpl = [
+            {
+                Mass: newmass,
+                Position: new Vector (newx, newy),
+                Velocity: new Vector (newvelx, newvely),
+                Color: "grey",
                 Radius: newradius
             }
         ]
@@ -270,4 +289,8 @@ function imgfun() {
 
 function newplanet(){
     prog.newpl()
+}
+
+function newcomet(){
+    prog.newc()
 }
